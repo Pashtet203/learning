@@ -1,0 +1,166 @@
+// НАЙТИ ЧИСЛО КОТОРОЕ ПРИСУТСТВУЕТ ПО ВСЕХ ТРЕХ МАССИВАХ
+// let arr1 = [1,2,5]
+// let arr2 = [3,3,4,5]
+// let arr3 = [2,3,4,5,6]
+
+
+// function findNumber(...args){
+//     let bigArr = []
+//     for (let arg of args){
+//         bigArr.push(...arg)
+//     }
+//     for (let i = 0; i <= bigArr.length; i++){
+//         if (arr1.includes(bigArr[i]) && arr2.includes(bigArr[i]) && arr3.includes(bigArr[i])){
+//             return bigArr[i]
+//         }
+//     }
+// }
+
+// НАЙТИ ПАРУ ИНДЕКСОВ СУММА ЗНАЧЕНИЙ КОТОРЫХ БУДЕТ РАВНА TARGET
+// let arr = [2,5,5,11]
+function twoSum(nums, target){
+    for (let i = 0; i < nums.length; i++){
+        for(let j = i+1; j < nums.length; j++){
+
+            if(nums[i] + nums[j] === target){
+                return [i,j]
+            }
+
+        }
+    }
+};
+
+
+// НАЙТИ САМУЮ ДЛИННУЮ ПОДСТРОКУ В СТРОКЕ
+function lengthOfLongestSubstring(s){
+
+    let longestSubstring = "";
+    for (let i = 0; i < s.length; i++) {
+        let currentSubstring = "";
+        for (let j = i; j < s.length; j++) {
+            // const char = s[j];
+            if (currentSubstring.includes(s[j])) {
+                break;
+            }
+            currentSubstring += s[j];
+        }
+        if (currentSubstring.length > longestSubstring.length) {
+            longestSubstring = currentSubstring;
+        }
+    }
+    return longestSubstring.length;
+};
+
+
+
+// НАЙТИ МЕДИАНУ ДВУХ ОТСОРТИРОВАННЫХ МАССИВОВ
+function findMedianSortedArrays(nums1, nums2) {
+
+    let bigArr = [...nums1, ...nums2].sort((a,b)=>a-b)
+
+    if (bigArr.length % 2 !== 0){
+        return bigArr[(bigArr.length-1)/2]
+    }
+    else {
+        let firstHalf = bigArr.slice(0,bigArr.length/2) // деление массива пополам
+        let secondHalf = bigArr.slice(bigArr.length/2)
+
+        return (firstHalf[firstHalf.length-1] + secondHalf[0])/2
+    }
+};
+
+console.log(findMedianSortedArrays([1,2,3,6,7],[4]))
+
+
+function binarySearch(arr,item){
+    let start = 0
+    let end = arr.length - 1
+    while (start <= end){
+        let mid = Math.floor((start + end) / 2)
+        if (arr[mid] === item){
+            return `${arr[mid]} по индексу ${mid}`
+        }
+        if (arr[mid] > item){
+            end = mid  - 1
+        }
+        else {
+            start = mid + 1
+        }
+    }
+    return `Такого элемента нет`
+}
+
+function fastSort(arr){
+    if (arr.length <= 1)
+        return arr
+
+    let pivot = arr[Math.floor(Math.random() * arr.length)]
+
+    let smallest = arr.filter(item => item < pivot)
+    let largest = arr.filter(item => item > pivot)
+
+    return [...fastSort(smallest), pivot, ...fastSort(largest)]
+}
+
+// console.log(fastSort([1,2,5,32,7,5,765,12,56,65]))
+
+// console.log(binarySearch([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17], 17))
+
+
+function addTwoNumbers(){
+    let dummyHead = new ListNode(0)
+
+}
+
+adj = {A: ["B","C"], B:["D","F"], С:["F","G"],F:["D","G"], G:[],D:["M","G"] }
+
+function deepFind(adj,v,t){
+    if (v === t) return true
+    if (v.visited) return  false
+
+    v.visited = true
+
+    for (let item of adj[v]){
+        if (!item.visited){
+            let reach = deepFind(adj,item,t)
+            if (reach) return  true
+        }
+    }
+    return false
+}
+
+function reverseInt(x){
+
+    if (x < 0){
+        return  -parseInt(x.toString().split("").reverse().join(""),10)
+    }
+    else {
+        return parseInt(x.toString().split("").reverse().join(""),10)
+    }
+    // let temp = x > 0 ? x : x * -1
+    // let result = 0
+    // while (temp){
+    //     result = result * 10 + temp % 10
+    //     temp = Math.floor(temp / 10)
+    // }
+    //
+    // return x > 0 ? result : result * -1
+}
+
+
+// s.charAt(0).toString() !== "+" || s.charAt(0).toString() !== "-"
+function myAtoi(s){
+    let nums = [1,2,3,4,5,6,7,8,9,0]
+    let res = ""
+    if (!nums.includes(parseInt(s.charAt(0))))
+        return 0
+    for (let char of s) {
+        if (nums.includes(parseInt(char)) || char === "+" || char === "-"){
+            res += char
+        }
+        else {break}
+    }
+    return res
+}
+
+console.log(myAtoi("-042"))
