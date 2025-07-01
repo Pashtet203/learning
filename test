@@ -238,14 +238,358 @@ function intToRoman(num){
 
 }
 
-console.log(intToRoman(58))
+// function longestPalindrome(s) {
+//     let res = ""
+//     let longestPalindrome = ""
+//     for (let i = 0; i < s.length; i++) {
+//             res += s[i]
+//
+//         if (res === res.split("").reverse().join("") && res.length > longestPalindrome.length ){
+//
+//             longestPalindrome = res
+//         }
+//
+//     }
+//     return longestPalindrome
+// }
 
-function longestPrefix(strs){
 
-    let res = ""
+function longestPalindrome(s) {
+    let check = (i, j) => {
+        let left = i;
+        let right = j - 1;
 
-    
+        while (left < right) {
+            if (s.charAt(left) !== s.charAt(right)) {
+                return false;
+            }
 
+            left++;
+            right--;
+        }
+
+        return true;
+    };
+
+    for (let length = s.length; length > 0; length--) {
+        for (let start = 0; start <= s.length - length; start++) {
+            if (check(start, start + length)) {
+                return s.substring(start, start + length);
+            }
+        }
+    }
+
+    return "";
+}
+
+const students = [
+    {name:"alex",age:20},
+    {name:"petr",age:20},
+    {name:"pasha",age:24},
+    {name:"misha",age:17},
+]
+
+function group(arr){
+    let result = {}
+
+    arr.forEach(elem =>{
+        if(!result[elem.age]){
+            result[elem.age] = [elem]
+        }
+        else {
+            result[elem.age].push(elem)
+        }
+    })
+    return result
+}
+
+
+
+function findTwoNumbers(arr,num){
+    for(let i=0;i<arr.length;i++){
+        for(let j=i+1;j<arr.length;j++){
+            if (arr[i] + arr[j] === num){
+                return [arr[i],arr[j]]
+            }
+        }
+    }
+}
+
+function isPalindrome(str) {
+
+    let cleanedStr = str.replace(/[^a-zA-Z0-9]/g,"").toLowerCase();
+
+    for (let i = 0; i < Math.floor(cleanedStr.length/2); i++) {
+        if (str[i] !== cleanedStr[cleanedStr.length - 1 - i]){
+            return false
+        }
+    }
+    return true
+}
+
+
+
+function groupCity(arr){
+    let res ={}
+    arr.forEach(elem => {
+        if (!res[elem.city]){
+            res[elem.city] = [elem];
+        }
+        else {
+            res[elem.city].push(elem);
+        }
+    })
+    return res
+}
+
+
+const array1 = [[1, 3], [2, 6], [8, 10], [15, 18]]; // [[1, 6], [8, 10], [15, 18]]
+const array2 = [[1, 4], [4, 5]];
+const array3 = [[11, 12], [2, 3], [5, 7], [1, 4], [8, 10], [6, 8]]; // [[1, 4], [5, 10], [11, 12]]
+
+function merge(intervals) {
+    intervals.sort((a,b)=> a[0] - b[0]);
+
+    let result = [intervals[0]]
+
+    // if (intervals.length < 1){
+    //     return intervals
+    // }
+    for (let interval of intervals){
+        let recent = result[result.length-1]
+
+        if (recent[1] >= interval[0]){
+            result[result.length - 1][1] = Math.max(recent[1], interval[1]);
+        }
+        else {
+            result.push(interval)
+        }
+    }
+    return result
+}
+
+console.log(merge(array1))
+
+
+
+const obj = {
+    a: {
+        b: {
+            c: 1,
+            d: 2
+        },
+        e: 3
+    },
+    f: 4
+};
+
+// let res = {
+
+// }
+// const flattenObject = (obj) => {
+//
+//     for (let key in obj) {
+//         if (!res[key]){
+//             res += key
+//         }
+//         if (Object.keys(key).length > 0){
+//             flattenObject(key)
+//         }
+//     }
+//
+//
+//     return res
+// }
+//
+// console.log(flattenObject(res))
+
+
+function isUnic(arr){
+
+    let unic = {}
+    arr.forEach(elem => {
+        if (unic[elem]){
+            unic[elem]++;
+        }
+        else {
+            unic[elem] = 1;
+        }
+    })
+
+    for (let item in unic){
+        if(unic[item] === 1)
+            return item
+    }
+    // console.log(unic)
+}
+
+
+function sortString(str){
+    let arr = str.split("")
+    let obj = {}
+
+    arr.forEach(elem => {
+        if (!obj[elem]){
+            obj[elem] = 1
+        }
+        else {
+            obj[elem]++
+        }
+    })
+
+    return Object.keys(obj).sort((a, b) => obj[a] - obj[b]).join("")
+}
+
+console.log(sortString("ccbbbaaaad"))
+
+let res = 0
+function sumArr(arr,index){
+    if (arr.length === index){
+        return 0
+    }
+    return arr[index] + sumArr(arr, index+1)
+}
+
+
+
+
+function fastSort(arr){
+    if (arr.length <= 1) return arr
+    let pivot = arr[Math.floor(Math.random() * arr.length)];
+
+
+    let smallest = arr.filter((item => item < pivot))
+    let largest = arr.filter((item => item > pivot))
+
+    return [...fastSort(smallest), pivot, ...fastSort(largest)]
+
+}
+console.log(fastSort([1,3,4,6,43,12,65,7,34,22]))
+
+
+// function largestPrefix(arr){
+//
+//     let res = arr[0].charAt(0)
+//     let exit = false
+//     while (true){
+//         if (arr.map((item)=>{item.includes(0,res.length)})){
+//             res += arr[0].charAt(res.length)
+//         }
+//         else {
+//              break
+//         }
+//     }
+//     return res
+// }
+// console.log(largestPrefix(["flower","flow","flight"]))
+
+
+let profit1 = [7,1,5,3,6,4]
+let profit2 = []
+
+function maxProfit(arr){
+
+    let res = 0
+
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] > arr[i - 1]) {
+            res += arr[i] - arr[i - 1]
+        }
+    }
 
     return res
 }
+
+
+let trap1 = [0,1,0,2,1,0,1,3,2,1,2,1]
+
+function trap(arr){
+
+    let maxLeft = arr[0]
+    let maxRight = arr[arr.length-1]
+
+    let left = 1
+    let right = arr.length-2
+
+    let res = 0
+
+    while(left <= right){
+        if (maxLeft <= maxRight){
+
+            if (maxLeft - arr[left] > 0){
+                res += maxLeft - arr[left]
+            }
+            maxLeft = Math.max(maxLeft, arr[left])
+            left++
+        }else {
+            if (maxRight - arr[right] > 0){
+                res += maxRight - arr[right]
+            }
+            maxRight = Math.max(maxRight, arr[right])
+            right--
+        }
+
+    }
+
+    return res
+}
+
+console.log(trap(trap1))
+
+
+Array.prototype.myFilter = function (callback){
+    let res = []
+
+    for (let i= 0; i < this.length;i++){
+        if (callback(this[i],i,this)){
+            res.push(this[i])
+        }
+    }
+    return res
+}
+
+
+
+
+
+function binarySearch(arr,item){
+    let sortArr = arr.sort()
+    let start = 0
+    let end = sortArr.length - 1
+
+    while (start <= end){
+        let mid = Math.floor((end+start) / 2)
+
+        if (sortArr[mid] === item){
+            return `${sortArr[mid]} по индексу ${mid}`
+        }
+        if (sortArr[mid] > item){
+            end = mid - 1;
+        }
+        else{
+            start = mid + 1;
+        }
+    }
+    return false
+}
+
+
+function findCommonElement(arr1, arr2, arr3) {
+    let i = 0, j = 0, k = 0;
+
+    while (i < arr1.length && j < arr2.length && k < arr3.length) {
+        if (arr1[i] === arr2[j] && arr2[j] === arr3[k]) {
+            return arr1[i];
+        } else if (arr1[i] < arr2[j]) {
+            i++;
+        } else if (arr2[j] < arr3[k]) {
+            j++;
+        } else {
+            k++;
+        }
+    }
+
+    return null; // Или -1, если нужно показать, что общего элемента нет.
+}
+
+
